@@ -7,7 +7,7 @@ package btcjson_test
 import (
 	"testing"
 
-	"github.com/stevenroose/go-bitcoin-core-rpc/btcjson"
+	"github.com/gracenoah/zcashd-rpc/btcjson"
 )
 
 // TestErrorCodeStringer tests the stringized output for the ErrorCode type.
