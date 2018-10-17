@@ -1,12 +1,12 @@
-go-bitcoin-core-rpc
-===================
+zcashd-rpc
+==========
 
 [![ISC License](http://img.shields.io/badge/license-ISC-blue.svg)](http://copyfree.org)
-[![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/stevenroose/go-bitcoin-core-rpc)
+[![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/gracenoah/zcashd-rpc)
 
-rpcclient implements a Bitcoin Core JSON-RPC client package written
+rpcclient implements a zcashd JSON-RPC client package written
 in [Go](http://golang.org/).  It provides a robust and easy to use client for
-interfacing with a Bitcoin RPC server.
+interfacing with a zcashd RPC server.
 
 ## Status
 
@@ -16,9 +16,9 @@ implement and the API is not stable yet.
 
 ## Documentation
 
-* [API Reference](http://godoc.org/github.com/stevenroose/go-bitcoin-core-rpc)
-* [Example](https://github.com/stevenroose/go-bitcoin-core-rpc/tree/master/examples)
-  Connects to a bitcoin Core RPC server using HTTP POST mode with TLS disabled
+* [API Reference](http://godoc.org/github.com/gracenoah/zcashd-rpc)
+* [Example](https://github.com/gracenoah/zcashd-rpc/tree/master/examples)
+  Connects to a zcashd RPC server using HTTP POST mode with TLS disabled
   and gets the current block count.
 
 ## Major Features
@@ -29,7 +29,7 @@ implement and the API is not stable yet.
 ## Installation
 
 ```bash
-$ go get -u github.com/stevenroose/go-bitcoin-core-rpc
+$ go get -u github.com/gracenoah/zcashd-rpc
 ```
 
 ## License

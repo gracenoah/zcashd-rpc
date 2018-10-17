@@ -10,7 +10,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/stevenroose/go-bitcoin-core-rpc/btcjson"
+	"github.com/gracenoah/zcashd-rpc/btcjson"
 )
 
 // TestAssignField tests the assignField function handles supported combinations

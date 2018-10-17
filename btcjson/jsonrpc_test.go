@@ -9,7 +9,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/stevenroose/go-bitcoin-core-rpc/btcjson"
+	"github.com/gracenoah/zcashd-rpc/btcjson"
 )
 
 // TestIsValidIDType ensures the IsValidIDType function behaves as expected.
