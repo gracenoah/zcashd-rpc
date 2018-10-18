@@ -13,6 +13,7 @@ import (
 	"github.com/btcsuite/btcd/wire"
 	"github.com/btcsuite/btcutil"
 	"github.com/gracenoah/zcashd-rpc/btcjson"
+	"github.com/iqoption/zecutil"
 )
 
 // SigHashType enumerates the available signature hashing types that the
@@ -285,12 +286,13 @@ func (r FutureSendRawTransactionResult) Receive() (*chainhash.Hash, error) {
 // the returned instance.
 //
 // See SendRawTransaction for the blocking version and more details.
-func (c *Client) SendRawTransactionAsync(tx *wire.MsgTx, allowHighFees bool) FutureSendRawTransactionResult {
+func (c *Client) SendRawTransactionAsync(tx *zecutil.MsgTx, allowHighFees bool) FutureSendRawTransactionResult {
 	txHex := ""
 	if tx != nil {
 		// Serialize the transaction and convert to hex string.
-		buf := bytes.NewBuffer(make([]byte, 0, tx.SerializeSize()))
-		if err := tx.Serialize(buf); err != nil {
+		// The size of the buffer is based on the size of the transaction in bitcoin, which is always less than the zcash version, so it's close enough, but not optimal.
+		buf := bytes.NewBuffer(make([]byte, 0, tx.MsgTx.SerializeSize()))
+		if err := tx.ZecEncode(buf, 0, wire.BaseEncoding); err != nil {
 			return newFutureError(err)
 		}
 		txHex = hex.EncodeToString(buf.Bytes())
@@ -302,7 +304,7 @@ func (c *Client) SendRawTransactionAsync(tx *wire.MsgTx, allowHighFees bool) Fut
 
 // SendRawTransaction submits the encoded transaction to the server which will
 // then relay it to the network.
-func (c *Client) SendRawTransaction(tx *wire.MsgTx, allowHighFees bool) (*chainhash.Hash, error) {
+func (c *Client) SendRawTransaction(tx *zecutil.MsgTx, allowHighFees bool) (*chainhash.Hash, error) {
 	return c.SendRawTransactionAsync(tx, allowHighFees).Receive()
 }
 
