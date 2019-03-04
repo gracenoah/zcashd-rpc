@@ -10,20 +10,22 @@ import "encoding/json"
 // the verbose flag is set.  When the verbose flag is not set, getblockheader
 // returns a hex-encoded string.
 type GetBlockHeaderVerboseResult struct {
-	Hash             string  `json:"hash"`
-	Confirmations    uint64  `json:"confirmations"`
-	Height           int32   `json:"height"`
-	Version          int32   `json:"version"`
-	MerkleRoot       string  `json:"merkleroot"`
-	FinalSaplingRoot string  `json:"finalsaplingroot"`
-	Time             int64   `json:"time"`
-	Nonce            string  `json:"nonce"`
-	Solution         string  `json:"solution"`
-	Bits             string  `json:"bits"`
-	Difficulty       float64 `json:"difficulty"`
-	ChainWork        string  `json:"chainwork"`
-	PreviousHash     string  `json:"previousblockhash,omitempty"`
-	NextHash         string  `json:"nextblockhash,omitempty"`
+	Hash          string          `json:"hash"`
+	Confirmations uint64          `json:"confirmations"`
+	Height        int32           `json:"height"`
+	Version       int32           `json:"version"`
+	VersionHex    string          `json:"versionHex"`
+	MerkleRoot    string          `json:"merkleroot"`
+	Time          int64           `json:"time"`
+	Nonce         json.RawMessage `json:"nonce"`
+	Bits          string          `json:"bits"`
+	Difficulty    float64         `json:"difficulty"`
+	PreviousHash  string          `json:"previousblockhash,omitempty"`
+	NextHash      string          `json:"nextblockhash,omitempty"`
+	// zcash specific
+	ChainWork        string `json:"chainwork"`
+	Solution         string `json:"solution"`
+	FinalSaplingRoot string `json:"finalsaplingroot"`
 }
 
 // GetBlockVerboseResult models the data from the getblock command when the
