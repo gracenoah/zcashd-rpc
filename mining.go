@@ -61,6 +61,19 @@ func (c *Client) Generate(numBlocks uint32) ([]*chainhash.Hash, error) {
 	return c.GenerateAsync(numBlocks).Receive()
 }
 
+// GenerateToAddressAsync returns an instance of a type that can be used to get
+// the result of the RPC at some future time by invoking the Receive function on
+// the returned instance.
+func (c *Client) GenerateToAddressAsync(numBlocks uint32, address string) FutureGenerateResult {
+	cmd := btcjson.NewGenerateToAddressCmd(numBlocks, address, nil)
+	return c.sendCmd(cmd)
+}
+
+// GenerateToAddress mines blocks immediately to a specified address
+func (c *Client) GenerateToAddress(numBlocks uint32, address string) ([]*chainhash.Hash, error) {
+	return c.GenerateToAddressAsync(numBlocks, address).Receive()
+}
+
 // FutureGetGenerateResult is a future promise to deliver the result of a
 // GetGenerateAsync RPC invocation (or an applicable error).
 type FutureGetGenerateResult chan *response
