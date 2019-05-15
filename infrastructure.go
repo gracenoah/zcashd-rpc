@@ -18,6 +18,7 @@ import (
 	"sync"
 	"sync/atomic"
 
+	"github.com/btcsuite/btcd/chaincfg"
 	"github.com/gracenoah/zcashd-rpc/btcjson"
 )
 
@@ -83,6 +84,8 @@ type Client struct {
 	sendPostChan chan *sendPostDetails
 	shutdown     chan struct{}
 	wg           sync.WaitGroup
+
+	networkParams *chaincfg.Params
 }
 
 // NextID returns the next id to be used when sending a JSON-RPC message.  This
@@ -439,18 +442,19 @@ func newHTTPClient(config *ConnConfig) (*http.Client, error) {
 // details.  The notification handlers parameter may be nil if you are not
 // interested in receiving notifications and will be ignored if the
 // configuration is set to run in HTTP POST mode.
-func New(config *ConnConfig) (*Client, error) {
+func New(config *ConnConfig, networkParams *chaincfg.Params) (*Client, error) {
 	httpClient, err := newHTTPClient(config)
 	if err != nil {
 		return nil, err
 	}
 
 	client := &Client{
-		config:       config,
-		httpClient:   httpClient,
-		requestList:  list.New(),
-		sendPostChan: make(chan *sendPostDetails, sendPostBufferSize),
-		shutdown:     make(chan struct{}),
+		config:        config,
+		httpClient:    httpClient,
+		requestList:   list.New(),
+		sendPostChan:  make(chan *sendPostDetails, sendPostBufferSize),
+		shutdown:      make(chan struct{}),
+		networkParams: networkParams,
 	}
 
 	log.Infof("Established connection to RPC server %s", config.Host)
