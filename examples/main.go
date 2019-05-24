@@ -7,6 +7,7 @@ package main
 import (
 	"log"
 
+	"github.com/btcsuite/btcd/chaincfg"
 	rpcclient "github.com/gracenoah/zcashd-rpc"
 )
 
@@ -19,7 +20,7 @@ func main() {
 	}
 	// Notice the notification parameter is nil since notifications are
 	// not supported in HTTP POST mode.
-	client, err := rpcclient.New(connCfg)
+	client, err := rpcclient.New(connCfg, &chaincfg.RegressionNetParams)
 	if err != nil {
 		log.Fatal(err)
 	}
