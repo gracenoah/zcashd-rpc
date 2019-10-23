@@ -2334,6 +2334,45 @@ func (c *Client) GetInfo() (*btcjson.InfoWalletResult, error) {
 	return c.GetInfoAsync().Receive()
 }
 
+// FutureGetNetworkInfoResult is a future promise to deliver the result of a
+// GetNetworkInfoAsync RPC invocation (or an applicable error).
+type FutureGetNetworkInfoResult chan *response
+
+// Receive waits for the response promised by the future and returns the info
+// provided by the server.
+func (r FutureGetNetworkInfoResult) Receive() (*btcjson.InfoWalletResult, error) {
+	res, err := receiveFuture(r)
+	if err != nil {
+		return nil, err
+	}
+
+	// Unmarshal result as a getinfo result object.
+	var infoRes btcjson.InfoWalletResult
+	err = json.Unmarshal(res, &infoRes)
+	if err != nil {
+		return nil, err
+	}
+
+	return &infoRes, nil
+}
+
+// GetNetworkInfoAsync returns an instance of a type that can be used to get the result
+// of the RPC at some future time by invoking the Receive function on the
+// returned instance.
+//
+// See GetNetworkInfo for the blocking version and more details.
+func (c *Client) GetNetworkInfoAsync() FutureGetNetworkInfoResult {
+	cmd := btcjson.NewGetNetworkInfoCmd()
+	return c.sendCmd(cmd)
+}
+
+// GetNetworkInfo returns miscellaneous info regarding the RPC server.  The returned
+// info object may be void of wallet information if the remote server does
+// not include wallet functionality.
+func (c *Client) GetNetworkInfo() (*btcjson.InfoWalletResult, error) {
+	return c.GetNetworkInfoAsync().Receive()
+}
+
 // TODO(davec): Implement
 // backupwallet (NYI in btcwallet)
 // encryptwallet (Won't be supported by btcwallet since it's always encrypted)
