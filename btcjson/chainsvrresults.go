@@ -123,17 +123,16 @@ type Bip9SoftForkDescription struct {
 // GetBlockChainInfoResult models the data returned from the getblockchaininfo
 // command.
 type GetBlockChainInfoResult struct {
-	Chain                string                 `json:"chain"`
-	Blocks               int32                  `json:"blocks"`
-	Headers              int32                  `json:"headers"`
-	BestBlockHash        string                 `json:"bestblockhash"`
-	Difficulty           float64                `json:"difficulty"`
-	MedianTime           int64                  `json:"mediantime"`
-	VerificationProgress float64                `json:"verificationprogress,omitempty"`
-	Pruned               bool                   `json:"pruned"`
-	PruneHeight          int32                  `json:"pruneheight,omitempty"`
-	ChainWork            string                 `json:"chainwork,omitempty"`
-	SoftForks            []*SoftForkDescription `json:"softforks"`
+	Chain                string  `json:"chain"`
+	Blocks               int32   `json:"blocks"`
+	Headers              int32   `json:"headers"`
+	BestBlockHash        string  `json:"bestblockhash"`
+	Difficulty           float64 `json:"difficulty"`
+	MedianTime           int64   `json:"mediantime"`
+	VerificationProgress float64 `json:"verificationprogress,omitempty"`
+	Pruned               bool    `json:"pruned"`
+	PruneHeight          int32   `json:"pruneheight,omitempty"`
+	ChainWork            string  `json:"chainwork,omitempty"`
 }
 
 // GetBlockTemplateResultTx models the transactions field of the
