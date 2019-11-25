@@ -285,16 +285,16 @@ func (r FutureSendRawTransactionResult) Receive() (*chainhash.Hash, error) {
 // the returned instance.
 //
 // See SendRawTransaction for the blocking version and more details.
-func (c *Client) SendRawTransactionAsync(tx []byte, allowHighFees bool) FutureSendRawTransactionResult {
+func (c *Client) SendRawTransactionAsync(tx []byte) FutureSendRawTransactionResult {
 	txHex := hex.EncodeToString(tx)
-	cmd := btcjson.NewSendRawTransactionCmd(txHex, &allowHighFees)
+	cmd := btcjson.NewSendRawTransactionCmd(txHex, nil)
 	return c.sendCmd(cmd)
 }
 
 // SendRawTransaction submits the encoded transaction to the server which will
 // then relay it to the network.
-func (c *Client) SendRawTransaction(tx []byte, allowHighFees bool) (*chainhash.Hash, error) {
-	return c.SendRawTransactionAsync(tx, allowHighFees).Receive()
+func (c *Client) SendRawTransaction(tx []byte) (*chainhash.Hash, error) {
+	return c.SendRawTransactionAsync(tx).Receive()
 }
 
 // FutureSignRawTransactionResult is a future promise to deliver the result
